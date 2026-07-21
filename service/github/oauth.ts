@@ -14,5 +14,6 @@ export async function getAccessToken(code: string) {
   });
 
   const result = await response.json();
-  return result.accss_token;
+
+  return result.access_token;
 }

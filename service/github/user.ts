@@ -4,5 +4,8 @@ export async function getGithubUser(accessToken: string) {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return response.json();
+
+  const userInfo = await response.json();
+
+  return userInfo;
 }
