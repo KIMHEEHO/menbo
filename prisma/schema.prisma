@@ -3,6 +3,8 @@
 
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
+// npx prisma db push
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,4 +20,40 @@ model User {
   email      String?
   avatarUrl  String?
   createdAt  DateTime @default(now())
+}
+
+model GithubEvent {
+  id         String   @id
+  userLogin  String
+  type       String
+  repoId     BigInt
+  repoName   String
+  payload    Json
+  createdAt  DateTime
+}
+
+model WeeklySummary {
+  id         String   @id @default(cuid())
+  userLogin  String
+  weekStart  DateTime
+  pushCount  Int
+  prCount    Int
+  issueCount Int
+  repoCount  Int
+  analysis   String
+  createdAt  DateTime @default(now())
+  @@unique([userLogin, weekStart])
+}
+
+model MonthlySummary {
+  id         String   @id @default(cuid())
+  userLogin  String
+  month      String
+  pushCount  Int
+  prCount    Int
+  issueCount Int
+  repoCount  Int
+  analysis   String
+  createdAt  DateTime @default(now())
+  @@unique([userLogin, month])
 }

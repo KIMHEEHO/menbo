@@ -1,6 +1,5 @@
-import { upsertUserAction } from "@/actions/upsertUser";
 import { getAccessToken } from "@/service/github/oauth";
-import { getGithubUser } from "@/service/github/user";
+import { syncGithubActivity } from "@/service/github/syncGithubActivity";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -12,9 +11,7 @@ export async function GET(request: NextRequest) {
 
   const accessToken = await getAccessToken(code);
 
-  const userInfo = await getGithubUser(accessToken);
-
-  await upsertUserAction(userInfo);
+  await syncGithubActivity(accessToken);
 
   return NextResponse.redirect(new URL("/home", request.url));
 }

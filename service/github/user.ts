@@ -1,11 +1,7 @@
+import { githubFetch } from "./client";
+
 export async function getGithubUser(accessToken: string) {
-  const response = await fetch("https://api.github.com/user", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await githubFetch("/user", accessToken);
 
-  const userInfo = await response.json();
-
-  return userInfo;
+  return response.json();
 }
