@@ -17,7 +17,7 @@ export async function saveMonthlySummary(
       prCount: summary.prCount,
       issueCount: summary.issueCount,
       repoCount: summary.repoCount,
-      analysis: "",
+      analysis: summary.analysis,
     },
     create: {
       userLogin,
@@ -26,7 +26,7 @@ export async function saveMonthlySummary(
       prCount: summary.prCount,
       issueCount: summary.issueCount,
       repoCount: summary.repoCount,
-      analysis: "",
+      analysis: summary.analysis,
     },
   });
 }

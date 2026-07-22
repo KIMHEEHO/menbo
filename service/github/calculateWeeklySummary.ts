@@ -1,7 +1,7 @@
 import { GithubEvent, WeeklyGithubEventCount } from "@/types/githubEvent";
 import { getWeekRange } from "@/utils/getWeekRange";
 
-export async function CalculateWeeklySummary(
+export async function calculateWeeklySummary(
   events: GithubEvent[],
 ): Promise<WeeklyGithubEventCount[]> {
   const summaries: WeeklyGithubEventCount[] = [];
@@ -26,6 +26,7 @@ export async function CalculateWeeklySummary(
       repoCount: new Set(
         weeklyEvents.map((event: GithubEvent) => event.repo.id),
       ).size,
+      analysis: "",
     };
 
     weeklyEvents.forEach((event: GithubEvent) => {

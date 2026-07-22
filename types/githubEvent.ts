@@ -31,6 +31,7 @@ export type WeeklyGithubEventCount = {
   prCount: number;
   issueCount: number;
   repoCount: number;
+  analysis: string;
 };
 
 export type MonthlyGithubEventCount = {
@@ -39,4 +40,5 @@ export type MonthlyGithubEventCount = {
   prCount: number;
   issueCount: number;
   repoCount: number;
+  analysis: string;
 };

@@ -1,6 +1,6 @@
 import { GithubEvent, MonthlyGithubEventCount } from "@/types/githubEvent";
 
-export async function CalculateMonthlySummary(
+export async function calculateMonthlySummary(
   events: GithubEvent[],
 ): Promise<MonthlyGithubEventCount> {
   const year = new Date().getFullYear();
@@ -18,6 +18,7 @@ export async function CalculateMonthlySummary(
     issueCount: 0,
     repoCount: new Set(monthlyEvents.map((event: GithubEvent) => event.repo.id))
       .size,
+    analysis: "",
   };
 
   monthlyEvents.forEach((event: GithubEvent) => {

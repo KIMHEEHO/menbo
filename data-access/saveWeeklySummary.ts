@@ -18,7 +18,7 @@ export async function saveWeeklySummary(
         prCount: summary.prCount,
         issueCount: summary.issueCount,
         repoCount: summary.repoCount,
-        analysis: "",
+        analysis: summary.analysis,
       },
       create: {
         userLogin,
@@ -27,7 +27,7 @@ export async function saveWeeklySummary(
         prCount: summary.prCount,
         issueCount: summary.issueCount,
         repoCount: summary.repoCount,
-        analysis: "",
+        analysis: summary.analysis,
       },
     });
   }
