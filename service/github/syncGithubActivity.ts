@@ -1,5 +1,5 @@
 import { getGithubEvents } from "./events";
-import { getGithubUser } from "./user";
+import { GithubUser } from "@/types/githubUser";
 import { upsertUser } from "@/data-access/upsertUser";
 import { saveWeeklySummary } from "@/data-access/saveWeeklySummary";
 import { saveGithubEvents } from "@/data-access/saveGithubEvents";
@@ -12,8 +12,10 @@ import { getWeeklySummary } from "@/data-access/getWeeklySummary";
 import { getMonthlySummary } from "@/data-access/getMonthlySummary";
 import { getWeekRange } from "@/utils/getWeekRange";
 
-export async function syncGithubActivity(accessToken: string) {
-  const user = await getGithubUser(accessToken);
+export async function syncGithubActivity(
+  accessToken: string,
+  user: GithubUser,
+) {
   await upsertUser(user);
 
   const events = await getGithubEvents(accessToken, user.login);
