@@ -1,11 +1,11 @@
-import { getGithubEvents } from "./events";
+import { getGithubEvents } from "../fetch/events";
 import { GithubUser } from "@/types/githubUser";
 import { upsertUser } from "@/data-access/upsertUser";
 import { saveWeeklySummary } from "@/data-access/saveWeeklySummary";
 import { saveGithubEvents } from "@/data-access/saveGithubEvents";
 import { saveMonthlySummary } from "@/data-access/saveMonthlySummary";
-import { calculateWeeklySummary } from "./calculateWeeklySummary";
-import { calculateMonthlySummary } from "./calculateMonthlySummary";
+import { calculateWeeklySummary } from "../summary/calculateWeeklySummary";
+import { calculateMonthlySummary } from "../summary/calculateMonthlySummary";
 import { analyzeWeekly } from "@/service/openai/analyzeWeekly";
 import { analyzeMonthly } from "@/service/openai/analyzeMonthly";
 import { getWeeklySummary } from "@/data-access/getWeeklySummary";

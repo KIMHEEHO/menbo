@@ -1,7 +1,7 @@
-import { getAccessToken } from "@/service/github/oauth";
-import { syncGithubActivity } from "@/service/github/syncGithubActivity";
+import { getAccessToken } from "@/service/github/api/oauth";
+import { syncGithubActivity } from "@/service/github/sync/syncGithubActivity";
 import { NextResponse, NextRequest } from "next/server";
-import { getGithubUser } from "@/service/github/user";
+import { getGithubUser } from "@/service/github/fetch/user";
 import { createSession } from "@/service/auth/createSession";
 
 export async function GET(request: NextRequest) {
