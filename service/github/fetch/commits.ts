@@ -1,18 +1,11 @@
 import { requestGithubGraphql } from "../api/graphql";
-import { getWeekRange } from "@/utils/getWeekRange";
 import { RepositoryCommit } from "@/types/commit";
 
-function getIsoDate(date: string, isEnd = false) {
-  // isEnd가 true면 해당 날짜의 마지막 시간(23:59:59)으로, false면 시작 시간(00:00:00)으로
-  const time = isEnd ? "T23:59:59Z" : "T00:00:00Z";
-  return `${date}${time}`;
-}
-
-export async function getCommits(accessToken: string) {
-  const { start, end } = getWeekRange();
-  const startIso = getIsoDate(start, false);
-  const endIso = getIsoDate(end, true);
-
+export async function getCommits(
+  accessToken: string,
+  start: string,
+  end: string,
+) {
   const query = `
     query {
         viewer {
@@ -23,8 +16,8 @@ export async function getCommits(accessToken: string) {
                             ... on Commit {
                                 history(
                                     first: 20
-                                    since: "${startIso}"
-                                    until: "${endIso}"
+                                    since: "${start}"
+                                    until: "${end}"
                                     ) {
                                     nodes {
                                         messageHeadline

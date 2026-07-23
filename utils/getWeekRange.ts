@@ -27,3 +27,9 @@ export function getWeekRange(offsetWeeks = 0) {
     end: formatDate(sunday),
   };
 }
+
+export function getIsoDate(date: string, isEnd = false) {
+  // isEnd가 true면 해당 날짜의 마지막 시간(23:59:59)으로, false면 시작 시간(00:00:00)으로
+  const time = isEnd ? "T23:59:59Z" : "T00:00:00Z";
+  return `${date}${time}`;
+}
