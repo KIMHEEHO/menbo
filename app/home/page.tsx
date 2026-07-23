@@ -1,26 +1,16 @@
-"use client";
-import { useState } from "react";
-export default function Home() {
-  const [response, setResponse] = useState<string | null>(null);
-  const askAIButton = async () => {
-    const res = await fetch("/api/ai/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        input: "안녕",
-      }),
-    });
-    const data = await res.json();
-    setResponse(data.response);
-  };
+import { getSession } from "@/lib/session";
+
+export default async function home() {
+  const session = await getSession();
 
   return (
     <>
-      <h1>하이~~</h1>
-      <button onClick={askAIButton}>Ask AI</button>
-      <h1>response: {response}</h1>
+      <span>좋은 하루에요 {session.isLoggedIn && session.githubLogin}님</span>
+      <span>오늘은 어떤 하루였나요? </span>
+      <div>
+        오늘 하루를 되돌아보며, 나의 활동을 분석하고, 더 나은 내일을 위해 계획을
+        세워보세요.
+      </div>
     </>
   );
 }
