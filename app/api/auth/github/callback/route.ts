@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 
   const user = await getGithubUser(accessToken);
 
-  await createSession(user.id, user.login);
+  await createSession(user.id, user.login, accessToken);
 
   void syncGithubActivity(accessToken, user);
 

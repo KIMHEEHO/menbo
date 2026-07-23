@@ -5,6 +5,7 @@ import { getIronSession } from "iron-session";
 export interface SessionData {
   userId: string;
   githubLogin: string;
+  accessToken: string;
   isLoggedIn: boolean;
 }
 
