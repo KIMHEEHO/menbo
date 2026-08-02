@@ -1,50 +1,32 @@
-import { GithubEvent, WeeklyGithubEventCount } from "@/types/githubEvent";
-import { getWeekRange } from "@/utils/getWeekRange";
+import { WeeklyActivityData } from "@/types/weeklyActivityData";
+import { WeeklySummaryVO } from "@/types/weeklySummaryVO";
 
 export async function calculateWeeklySummary(
-  events: GithubEvent[],
-): Promise<WeeklyGithubEventCount[]> {
-  const summaries: WeeklyGithubEventCount[] = [];
+  weeklyData : WeeklyActivityData
+): Promise<WeeklySummaryVO> {
 
-  for (let i = 0; i > -4; i--) {
-    const { start: startDate, end: endDate } = getWeekRange(i);
+const weeklySummaries: WeeklySummaryVO[] = [];
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+const summary : WeeklySummaryVO = {
+    weekStart: startDate,
+    summary: weeklyData.summary,
+    calendar: weeklyData.calendar,
+    commits: weeklyData.commits,
+    analysis: "",
+    createdAt: new Date(),
+}
 
-    const weeklyEvents = events.filter((event: GithubEvent) => {
-      const date = new Date(event.created_at);
+  weeklyData.map((data) => {
+    summary : WeeklySummaryVO = {
+        weekStart: startDate,
+        summary: data.summary,
+        calendar: data.calendar,
+        commits: data.commits,
+        analysis: "",
+        createdAt: new Date(),
+    }
+    weeklySummaries.push(summary);
+  });
 
-      return date >= start && date < end;
-    });
-
-    const summary: WeeklyGithubEventCount = {
-      startDate: startDate,
-      pushCount: 0,
-      prCount: 0,
-      issueCount: 0,
-      repoCount: new Set(
-        weeklyEvents.map((event: GithubEvent) => event.repo.id),
-      ).size,
-      analysis: "",
-    };
-
-    weeklyEvents.forEach((event: GithubEvent) => {
-      switch (event.type) {
-        case "PushEvent":
-          summary.pushCount++;
-          break;
-
-        case "IssuesEvent":
-          summary.issueCount++;
-          break;
-
-        case "PullRequestEvent":
-          summary.prCount++;
-          break;
-      }
-    });
-    summaries.push(summary);
-  }
-  return summaries;
+  return weeklySummaries;
 }

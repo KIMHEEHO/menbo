@@ -32,28 +32,36 @@ model GithubEvent {
   createdAt  DateTime
 }
 
+
 model WeeklySummary {
   id         String   @id @default(cuid())
   userLogin  String
   weekStart  DateTime
-  pushCount  Int
-  prCount    Int
-  issueCount Int
-  repoCount  Int
-  analysis   String
+
+  summary    Json
+  calendar   Json
+  commits    Json
+
+  analysis   String?
+
   createdAt  DateTime @default(now())
+
   @@unique([userLogin, weekStart])
 }
 
 model MonthlySummary {
-  id         String   @id @default(cuid())
-  userLogin  String
-  month      String
-  pushCount  Int
-  prCount    Int
-  issueCount Int
-  repoCount  Int
-  analysis   String
-  createdAt  DateTime @default(now())
+  id            String   @id @default(cuid())
+  userLogin     String
+  month         String
+
+  summary       Json
+  repo          Json
+
+  analysis      String?
+  growthPoint   String?
+
+  createdAt     DateTime @default(now())
+
   @@unique([userLogin, month])
 }
+

@@ -7,7 +7,7 @@ export function getWeekRange(offsetWeeks = 0) {
   const day = now.getDay();
 
   // 월요일 기준 시작일 계산
-  const diffToMonday = now.getDate() - day + (day === 0 ? -6 : 1);
+  const diffToMonday = now.getDate() - day + (day === 0 ? -6 : 0);
   const monday = new Date(now.setDate(diffToMonday));
 
   // 일요일 기준 종료일 계산

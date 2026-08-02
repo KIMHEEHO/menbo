@@ -3,16 +3,19 @@ import { GithubEvent, MonthlyGithubEventCount } from "@/types/githubEvent";
 export async function calculateMonthlySummary(
   events: GithubEvent[],
 ): Promise<MonthlyGithubEventCount> {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
+  const date = new Date();
+  date.setMonth(date.getMonth() - 1);
+
+  const year = date.getFullYear();
+  const month = date.getMonth();
 
   const monthlyEvents = events.filter((event: GithubEvent) => {
     const date = new Date(event.created_at);
-    return date.getFullYear() === year && date.getMonth() + 1 === month;
+    return date.getFullYear() === year && date.getMonth() === month;
   });
 
   const summary: MonthlyGithubEventCount = {
-    month: `${year}-${String(month).padStart(2, "0")}`,
+    month: `${year}-${String(month + 1).padStart(2, "0")}`,
     pushCount: 0,
     prCount: 0,
     issueCount: 0,

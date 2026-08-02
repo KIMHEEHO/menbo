@@ -1,34 +1,31 @@
 import { prisma } from "@/lib/prisma";
-import { WeeklyGithubEventCount } from "@/types/githubEvent";
+import { WeeklySummaryVO } from "@/types/weeklySummaryVO";
 
 export async function saveWeeklySummary(
   userLogin: string,
-  summaries: WeeklyGithubEventCount[],
+  summary: WeeklySummaryVO,
 ) {
-  for (const summary of summaries) {
-    await prisma.weeklySummary.upsert({
-      where: {
-        userLogin_weekStart: {
-          userLogin: userLogin,
-          weekStart: new Date(summary.startDate),
-        },
+  await prisma.weeklySummary.upsert({
+    where: {
+      userLogin_weekStart: {
+        userLogin: userLogin,
+        weekStart: new Date(summary.weekStart),
       },
-      update: {
-        pushCount: summary.pushCount,
-        prCount: summary.prCount,
-        issueCount: summary.issueCount,
-        repoCount: summary.repoCount,
-        analysis: summary.analysis,
-      },
-      create: {
-        userLogin,
-        weekStart: new Date(summary.startDate),
-        pushCount: summary.pushCount,
-        prCount: summary.prCount,
-        issueCount: summary.issueCount,
-        repoCount: summary.repoCount,
-        analysis: summary.analysis,
-      },
-    });
-  }
+    },
+    update: {
+      summary: summary.summary,
+      calendar: summary.calendar,
+      commits: summary.commits,
+      analysis: summary.analysis,
+    },
+    create: {
+      userLogin,
+      weekStart: new Date(summary.weekStart),
+      summary: summary.summary,
+      calendar: summary.calendar,
+      commits: summary.commits,
+      analysis: summary.analysis,
+      createdAt: new Date(),
+    },
+  });
 }

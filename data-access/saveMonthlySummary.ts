@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { MonthlyGithubEventCount } from "@/types/githubEvent";
+import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
 
 export async function saveMonthlySummary(
   userLogin: string,
-  summary: MonthlyGithubEventCount,
+  summary: MonthlySummaryVO,
 ) {
   await prisma.monthlySummary.upsert({
     where: {
@@ -13,20 +13,19 @@ export async function saveMonthlySummary(
       },
     },
     update: {
-      pushCount: summary.pushCount,
-      prCount: summary.prCount,
-      issueCount: summary.issueCount,
-      repoCount: summary.repoCount,
+      summary: summary.summary,
+      repo: summary.repo,
       analysis: summary.analysis,
+      growthPoint: summary.growthPoint,
     },
     create: {
       userLogin,
       month: summary.month,
-      pushCount: summary.pushCount,
-      prCount: summary.prCount,
-      issueCount: summary.issueCount,
-      repoCount: summary.repoCount,
+      summary: summary.summary,
+      repo: summary.repo,
       analysis: summary.analysis,
+      growthPoint: summary.growthPoint,
+      createdAt: new Date(),
     },
   });
 }
