@@ -5,7 +5,17 @@ export default function GitHubLoginButton() {
   return (
     <>
       <button
-        className="flex align-items bg-#2563EB hover text-white  py-4 px-4 rounded text-1xl"
+        className="
+ flex
+ items-center
+ bg-blue-600
+ hover:bg-blue-700
+ text-white
+ py-2
+ px-3
+ rounded-lg
+ text-lg
+ "
         onClick={githubLogin}
       >
         GitHub로 시작하기
