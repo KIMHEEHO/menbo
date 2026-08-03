@@ -7,7 +7,7 @@ export async function createSession(
 ) {
   const session = await getSession();
 
-  session.userId = userId;
+  session.userId = userId.toString();
   session.githubLogin = githubLogin;
   session.accessToken = accessToken;
   session.isLoggedIn = true;
