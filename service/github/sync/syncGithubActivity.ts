@@ -28,9 +28,13 @@ export async function syncGithubActivity(
   await saveGithubEvents(events);
 
   // 주간, 월간 데이터 요청에 필요한 날짜 계산(지난주, 지난달)
+  // start:2026-07-26, end:2026-08-02, startIso:2026-07-26T00:00:00Z, endIso:2026-08-02T23:59:59Z
+  // date:2026-07-03T10:31:28.332Z, month:2026-07
   const { start, end } = getWeekRange(-1);
+
   const startIso = getIsoDate(start, false);
   const endIso = getIsoDate(end, true);
+
   const date = new Date();
   date.setMonth(date.getMonth() - 1);
   const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
@@ -52,7 +56,6 @@ export async function syncGithubActivity(
       weeklyData.commits,
     );
 
-    console.log("4.", analysis);
     const weeklySummary: WeeklySummaryVO = {
       userLogin: user.login,
       weekStart: startIso,
