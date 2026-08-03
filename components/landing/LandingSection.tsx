@@ -18,7 +18,7 @@ export default function LandingSection({
   return (
     <section
       className={`
-        min-h-screen
+        section
         flex
         items-center
         ${alignStyle[align]}

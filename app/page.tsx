@@ -10,7 +10,7 @@ import LandingFeatureSection from "@/components/landing/LandingFeatureSection";
 
 export default function Home() {
   return (
-    <>
+    <main className="snap-container">
       <LandingSection>
         <HeroSection />
       </LandingSection>
@@ -26,6 +26,6 @@ export default function Home() {
       <LandingSection>
         <CTASection />
       </LandingSection>
-    </>
+    </main>
   );
 }

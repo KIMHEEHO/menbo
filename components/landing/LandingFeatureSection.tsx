@@ -12,9 +12,11 @@ export default function LandingFeatureSection({
   return (
     <section
       className={`
-        min-h-screen
-        flex
-        items-center
+          section
+          flex        
+          items-center
+        ml-4
+        mr-4
           ${direction === "reverse" ? "flex-row-reverse" : "flex-row"}
       `}
     >
