@@ -18,7 +18,9 @@ export default function GitHubActivityCard(props: GitHubActivityCardProps) {
           <CardTitle>{props.title}</CardTitle>
           <CardDescription></CardDescription>
         </CardHeader>
-        <CardContent>{props.count}</CardContent>
+        <CardContent>
+          <h1 className="text-4xl font-bold text-right">{props.count}</h1>
+        </CardContent>
       </Card>
     </div>
   );
