@@ -35,17 +35,10 @@ export default function WeeklyActivityChart(props: WeeklyActivityChartProps) {
       style={{
         width: "100%",
         height: "100%",
-        maxHeight: "30vh",
         aspectRatio: 1.618,
       }}
       responsive
       data={chartData}
-      margin={{
-        top: 5,
-        right: 10,
-        left: 10,
-        bottom: 5,
-      }}
     >
       <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
 
@@ -62,11 +55,20 @@ export default function WeeklyActivityChart(props: WeeklyActivityChartProps) {
           stroke: "var(--color-border-2)",
         }}
         contentStyle={{
-          backgroundColor: "var(--color-surface-raised)",
-          borderColor: "var(--color-border-2)",
+          backgroundColor: "white",
+          borderColor: "#e5e7eb",
+          borderRadius: "8px",
+          padding: "8px 12px",
+          fontSize: "12px",
         }}
       />
-      <Legend />
+      {/* <Legend
+        verticalAlign="top"
+        align="center"
+        wrapperStyle={{
+          paddingBottom: "10px",
+        }}
+      /> */}
       <Line
         type="monotone"
         dataKey="commit_count"

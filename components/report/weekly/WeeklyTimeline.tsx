@@ -1,29 +1,55 @@
 import * as React from "react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { GitCommitHorizontal } from "lucide-react";
 
 type WeeklyTimelineProps = {
   commits: {
     messageHeadline: string;
     committedDate: string;
     url: string;
+    additions: number;
+    deletions: number;
+    changedFilesIfAvailable: number;
   }[];
 };
 
 export function WeeklyTimeline(props: WeeklyTimelineProps) {
-  const timelineItems = props.commits;
   return (
-    <ScrollArea className="h-72 w-full rounded-md border">
-      <div className="p-4">
-        {timelineItems.map((commit) => (
-          <React.Fragment key={commit.url}>
-            <div className="text-sm">{commit.messageHeadline}</div>
-            <div className="text-xs text-muted-foreground">
-              {new Date(commit.committedDate).toLocaleString()}
+    <ScrollArea className="h-full w-full rounded-md border">
+      <div className="relative p-4">
+        {/* 세로선 */}
+        <div className="absolute left-8 top-4 bottom-4 w-px bg-gray-300" />
+
+        {props.commits.map((commit) => (
+          <div key={commit.url} className="relative flex gap-2 pb-4">
+            {/* 아이콘 */}
+            <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white">
+              <GitCommitHorizontal className="h-4 w-4" />
             </div>
-            <Separator className="my-2" />
-          </React.Fragment>
+
+            {/* 내용 */}
+            <div className="flex-1">
+              <p className="text-xs text-muted-foreground">
+                {new Date(commit.committedDate).toLocaleString()}
+              </p>
+
+              <a
+                href={commit.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block font-semibold text-black hover:text-blue-600 hover:underline"
+              >
+                {commit.messageHeadline}
+              </a>
+
+              <p className="text-xs text-muted-foreground mt-1">
+                📄 {commit.changedFilesIfAvailable} files ·
+                <span className="text-green-600 ml-1">+{commit.additions}</span>
+                <span className="text-red-500 ml-1">-{commit.deletions}</span>
+              </p>
+            </div>
+          </div>
         ))}
       </div>
     </ScrollArea>

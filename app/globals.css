@@ -80,7 +80,7 @@
 :root {
   /* --background: #0f0f0f; */
   /* --foreground: #ffffff; */
-  --background: #f8fafc;
+  --background: ##f8fafc;
   --foreground: #000000;
 
   /* --card: #171717; */
@@ -89,9 +89,9 @@
 
   --primary: #facc15;
 
-  --border: #303030;
-
+  --border: #e2e8f0;
   --radius: 0.75rem;
+  --header-height: 64px;
 }
 :root {
   /* --background: oklch(1 0 0);

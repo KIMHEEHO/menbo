@@ -10,18 +10,17 @@ interface GitHubActivityCardProps {
   title: string;
   count: number;
 }
-export default function GitHubActivityCard(props: GitHubActivityCardProps) {
+
+export default function GitHubActivityCard({
+  title,
+  count,
+}: GitHubActivityCardProps) {
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>{props.title}</CardTitle>
-          <CardDescription></CardDescription>
-        </CardHeader>
-        <CardContent>
-          <h1 className="text-4xl font-bold text-right">{props.count}</h1>
-        </CardContent>
-      </Card>
-    </div>
+    <Card className="rounded-xl border shadow-sm p-4">
+      <div className="flex items-center justify-between">
+        <p className="text-mdfont-medium text-gray-500">{title}</p>
+        <span className="text-4xl font-bold text-black">{count}</span>
+      </div>
+    </Card>
   );
 }
