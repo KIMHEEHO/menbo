@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { MonthlyReviewResult } from "@/types/monthlySummaryVO";
 
 export async function getMonthlyAnalysis(userLogin: string, month: string) {
   const result = await prisma.monthlySummary.findUnique({
@@ -19,6 +20,6 @@ export async function getMonthlyAnalysis(userLogin: string, month: string) {
 
   return {
     analysis: result.analysis as AnalysisResult,
-    growthPoint: result.growthPoint as AnalysisResult,
+    growthPoint: result.growthPoint as MonthlyReviewResult | null,
   };
 }

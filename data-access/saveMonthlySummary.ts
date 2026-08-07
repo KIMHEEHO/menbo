@@ -16,7 +16,9 @@ export async function saveMonthlySummary(
       summary: summary.summary,
       repo: summary.repo,
       analysis: summary.analysis,
-      growthPoint: summary.growthPoint,
+      growthPoint: summary.growthPoint
+        ? JSON.parse(JSON.stringify(summary.growthPoint))
+        : undefined,
     },
     create: {
       userLogin,
@@ -24,7 +26,9 @@ export async function saveMonthlySummary(
       summary: summary.summary,
       repo: summary.repo,
       analysis: summary.analysis,
-      growthPoint: summary.growthPoint,
+      growthPoint: summary.growthPoint
+        ? JSON.parse(JSON.stringify(summary.growthPoint))
+        : undefined,
       createdAt: new Date(),
     },
   });

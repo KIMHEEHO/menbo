@@ -14,7 +14,7 @@ import { WeeklySummaryVO } from "@/types/weeklySummaryVO";
 import { getMonthlyData } from "../fetch/monthly";
 import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
 import { getWeeklyAnalysisAction } from "@/actions/getWeeklyAnalysis";
-import { getGrowthPoint } from "./growthPoint";
+import { getGrowthPoint } from "../../openai/growthPoint";
 import { AnalysisResult } from "@/types/weeklySummaryVO";
 
 export async function syncGithubActivity(
@@ -98,6 +98,7 @@ export async function syncGithubActivity(
         growth_points: analysisMonthlyData.growth_points,
         next_recommendation: analysisMonthlyData.next_recommendation,
       },
+      growthPoint: null,
       createdAt: new Date(),
     };
 
@@ -129,7 +130,7 @@ export async function syncGithubActivity(
     // 월간 요약 저장
     await saveMonthlySummary(user.login, {
       ...monthlySummary,
-      growthPoint,
+      growthPoint: growthPoint || null,
     });
   }
 }
