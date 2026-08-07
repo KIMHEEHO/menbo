@@ -15,6 +15,7 @@ import { getMonthlyData } from "../fetch/monthly";
 import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
 import { getWeeklyAnalysisAction } from "@/actions/getWeeklyAnalysis";
 import { getGrowthPoint } from "./growthPoint";
+import { AnalysisResult } from "@/types/weeklySummaryVO";
 
 export async function syncGithubActivity(
   accessToken: string,
@@ -50,19 +51,25 @@ export async function syncGithubActivity(
 
   // 저장된 데이터가 없으면 주간 AI 분석 후 저장
   if (!existingWeekly) {
-    const analysis = await analyzeWeekly(
+    const analysisData = await analyzeWeekly(
       weeklyData.summary,
-      weeklyData.calendar,
+      weeklyData.chart,
       weeklyData.commits,
     );
+
+    console.log("주간 분석 결과:", analysisData);
 
     const weeklySummary: WeeklySummaryVO = {
       userLogin: user.login,
       weekStart: startIso,
       summary: weeklyData.summary,
-      calendar: weeklyData.calendar,
+      calendar: weeklyData.chart,
       commits: weeklyData.commits,
-      analysis: analysis,
+      analysis: {
+        positive_feedback: analysisData.positive_feedback,
+        growth_points: analysisData.growth_points,
+        next_recommendation: analysisData.next_recommendation,
+      },
       createdAt: new Date(),
     };
 
@@ -78,7 +85,7 @@ export async function syncGithubActivity(
 
   // 저장된 데이터가 없으면 월간 AI, 성장포인트 분석 후 저장
   if (!existingMonthly) {
-    const analysis = await analyzeMonthly(
+    const analysisData = await analyzeMonthly(
       monthlyData.summary,
       monthlyData.repo,
     );
@@ -88,12 +95,20 @@ export async function syncGithubActivity(
       month: month,
       summary: monthlyData.summary,
       repo: monthlyData.repo,
-      analysis: analysis,
+      analysis: {
+        positive_feedback: analysisData.positive_feedback,
+        growth_points: analysisData.growth_points,
+        next_recommendation: analysisData.next_recommendation,
+      },
       growthPoint: "",
       createdAt: new Date(),
     };
 
-    const weeklyAnalysis: string[] = [];
+    const weeklyAnalysis: {
+      positive_feedback: string;
+      growth_points: string;
+      next_recommendation: string;
+    }[] = [];
 
     for (let i = -1; i >= -4; i--) {
       const { start } = getWeekRange(i);
@@ -104,7 +119,7 @@ export async function syncGithubActivity(
       );
 
       if (weekly?.analysis) {
-        weeklyAnalysis.push(weekly.analysis);
+        weeklyAnalysis.push(weekly.analysis as AnalysisResult);
       }
     }
 

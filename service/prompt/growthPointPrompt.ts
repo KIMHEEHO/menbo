@@ -1,6 +1,8 @@
+import { AnalysisResult } from "@/types/weeklySummaryVO";
+
 export function buildGrowthPointPrompt(
-  monthlySummary: string,
-  weeklySummary: string,
+  monthlySummary: AnalysisResult,
+  w: AnalysisResult[],
 ): string {
   return `
 당신은 '멘보(MENBO)'의 AI 멘탈 코치입니다.
@@ -12,10 +14,10 @@ export function buildGrowthPointPrompt(
 - 사용자가 자신의 성장과 발전을 객관적으로 인식하도록 도와주세요.
 
 이번 달 주간 분석들
-${weeklySummary}
+${w.map((weekly) => JSON.stringify(weekly)).join("\n")}
 
 이번 달 월간 분석
-${monthlySummary}
+${monthlySummary ? JSON.stringify(monthlySummary) : "월간 분석 데이터가 없습니다."}
 
 규칙
 - 데이터에 없는 내용은 추측하지 마세요.

@@ -6,7 +6,11 @@ export type MonthlySummaryVO = {
   month: string;
   summary: WeeklyMonthlySummary;
   repo: Repository[];
-  analysis: string;
+  analysis: {
+    positive_feedback: string;
+    growth_points: string;
+    next_recommendation: string;
+  };
   growthPoint: string;
   createdAt: Date;
 };

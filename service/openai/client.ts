@@ -6,5 +6,5 @@ export async function askAI(input: string): Promise<string> {
     input,
   });
 
-  return response.output_text;
+  return JSON.parse(response.output_text);
 }

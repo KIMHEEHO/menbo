@@ -16,7 +16,11 @@ export async function saveWeeklySummary(
       summary: summary.summary,
       calendar: summary.calendar,
       commits: summary.commits,
-      analysis: summary.analysis,
+      analysis: {
+        positive_feedback: summary.analysis?.positive_feedback || "...",
+        growth_points: summary.analysis?.growth_points || "...",
+        next_recommendation: summary.analysis?.next_recommendation || "...",
+      },
     },
     create: {
       userLogin,
@@ -24,7 +28,11 @@ export async function saveWeeklySummary(
       summary: summary.summary,
       calendar: summary.calendar,
       commits: summary.commits,
-      analysis: summary.analysis,
+      analysis: {
+        positive_feedback: summary.analysis?.positive_feedback,
+        growth_points: summary.analysis?.growth_points,
+        next_recommendation: summary.analysis?.next_recommendation,
+      },
       createdAt: new Date(),
     },
   });

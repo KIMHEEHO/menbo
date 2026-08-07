@@ -10,6 +10,12 @@ export type WeeklySummaryVO = {
   summary: WeeklyMonthlySummary;
   calendar: ContributionDay[];
   commits: CommitNode[];
-  analysis?: string;
+  analysis?: AnalysisResult;
   createdAt: Date;
+};
+
+export type AnalysisResult = {
+  positive_feedback: string;
+  growth_points: string;
+  next_recommendation: string;
 };
