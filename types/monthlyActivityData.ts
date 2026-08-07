@@ -11,7 +11,17 @@ export type Repository = {
   pushedAt: string;
   stargazerCount: number;
   url: string;
-  primaryLanguage: PrimaryLanguage | null;
+  primaryLanguage: {
+    name: string;
+    color: string;
+  } | null;
+  defaultBranchRef?: {
+    target?: {
+      history?: {
+        totalCount: number;
+      };
+    };
+  };
 };
 
 export type PrimaryLanguage = {

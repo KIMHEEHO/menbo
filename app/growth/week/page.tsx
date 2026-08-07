@@ -3,6 +3,11 @@ import GitHubActivityCard from "@/components/report/GitHubActivityCard";
 import { getSession } from "@/lib/session";
 import { getWeeklyData } from "@/service/github/fetch/weekly";
 import { getIsoDate, getWeekRange } from "@/utils/getWeekRange";
+import WeeklyActivityChart from "@/components/report/weekly/WeeklyChart";
+import { WeeklyTimeline } from "@/components/report/weekly/WeeklyTimeline";
+import { AnalysisAlert } from "@/components/report/AnalysisAlert";
+import { AnalysisResult } from "@/types/weeklySummaryVO";
+
 export default async function weeklyReport() {
   const { start, end } = getWeekRange(-1);
   const startIso = getIsoDate(start, false);
@@ -33,7 +38,8 @@ export default async function weeklyReport() {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    // <div className="w-full px-8 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-6 py-8">
       {/* 상단 날짜 타이틀 영역 */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">
@@ -45,7 +51,8 @@ export default async function weeklyReport() {
       </div>
 
       <div className="grid grid-cols-10 gap-6">
-        <div className="col-span-4 rounded-xl border bg-card text-card-foreground p-6 shadow-sm grid grid-cols-2 gap-4">
+        {/* <div className="col-span-4 rounded-xl border bg-card text-card-foreground p-6 shadow-sm grid grid-cols-2 gap-4"> */}
+        <div className="col-span-4 grid grid-cols-2 gap-4 bg-white rounded-xl border p-6 shadow-sm">
           {cards.map((card) => (
             <GitHubActivityCard
               key={card.title}
@@ -55,42 +62,24 @@ export default async function weeklyReport() {
           ))}
         </div>
 
-        <div className="col-span-6 rounded-xl border bg-card text-card-foreground p-6 shadow-sm">
+        {/* <div className="col-span-6 rounded-xl border text-card-foreground p-6 shadow-sm bg-white"> */}
+        <div className="col-span-6 grid grid-cols-1 gap-6 bg-white rounded-xl border p-6 shadow-sm">
           <h3 className="font-semibold mb-4">주간 기여도 그래프</h3>
-          {weeklyData.calendar.map(
-            (day: { date: string; contributionCount: number }) => (
-              <div key={day.date} className="text-sm">
-                {day.date}: {day.contributionCount}
-              </div>
-            ),
-          )}
+          <WeeklyActivityChart chart={weeklyData.chart} />
         </div>
 
         <div className="col-span-10 rounded-xl border bg-card text-card-foreground p-6 shadow-sm">
           <h3 className="font-semibold mb-4">최근 커밋 타임라인</h3>
           <div className="space-y-3">
-            {weeklyData.commits.map(
-              (commit: {
-                messageHeadline: string;
-                committedDate: string;
-                url: string;
-              }) => (
-                <div key={commit.url} className="border-b pb-2 last:border-0">
-                  <p className="font-medium">{commit.messageHeadline}</p>
-                  <p className="text-xs text-muted-foreground">
-                    Committed Date: {commit.committedDate}
-                  </p>
-                </div>
-              ),
-            )}
+            <WeeklyTimeline commits={weeklyData.commits} />
           </div>
         </div>
 
         <div className="col-span-10 rounded-xl border bg-muted/50 p-6 shadow-sm">
-          <h3 className="font-semibold mb-2">💡 AI 주간 인사이트</h3>
-          <p className="text-sm leading-relaxed">
-            {weeklyAnalysis?.analysis || "No analysis available"}
-          </p>
+          <h4>💡 AI 주간 인사이트</h4>
+          <AnalysisAlert
+            analysis={weeklyAnalysis?.analysis as AnalysisResult | undefined}
+          />
         </div>
       </div>
     </div>

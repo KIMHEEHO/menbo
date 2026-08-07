@@ -12,7 +12,7 @@ export default async function Header() {
   return (
     <>
       <header className="flex items-center justify-between px-6 py-4">
-        <div className="flex-center text-4xl font-black tracking-[0.08em] text-white">
+        <div className="flex-center text-4xl font-black tracking-[0.08em] text-black dark:text-white">
           MENBO
         </div>
         {session.isLoggedIn && <HeaderButton avatarUrl={userInfo.avatarUrl} />}

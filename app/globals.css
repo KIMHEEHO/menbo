@@ -78,10 +78,13 @@
 }
 
 :root {
-  --background: #0f0f0f;
-  --foreground: #ffffff;
+  /* --background: #0f0f0f; */
+  /* --foreground: #ffffff; */
+  --background: #f8fafc;
+  --foreground: #000000;
 
-  --card: #171717;
+  /* --card: #171717; */
+  --card: #ffffff;
   --card-foreground: #ffffff;
 
   --primary: #facc15;
