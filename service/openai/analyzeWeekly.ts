@@ -13,6 +13,5 @@ export async function analyzeWeekly(
   commits: CommitNode[],
 ): Promise<AnalysisResult> {
   const prompt = buildWeeklyPrompt(summary, calendar, commits);
-  const result = await askAI(prompt);
-  return JSON.parse(result) as AnalysisResult;
+  return await askAI(prompt);
 }

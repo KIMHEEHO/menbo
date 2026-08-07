@@ -7,7 +7,7 @@ export async function getMonthlyData(accessToken: string, month: string) {
   const query = ` 
     query {
         viewer {
-            repositories(first: 10 orderBy: {
+            repositories(first: 100 orderBy: {
                 field: PUSHED_AT
                 direction: DESC
             }
@@ -27,6 +27,19 @@ export async function getMonthlyData(accessToken: string, month: string) {
                             topic {
                                 name
                             }
+                        }
+                    }
+                    defaultBranchRef {
+                        target {
+                        ... on Commit {
+                            history(
+                            first: 100
+                            since: "${getMonth.from}"
+                            until: "${getMonth.to}"
+                            ) {
+                            totalCount
+                            }
+                        }
                         }
                     }
                 } 
@@ -49,7 +62,7 @@ export async function getMonthlyData(accessToken: string, month: string) {
 
   const projects = response.data.viewer.repositories.nodes.filter(
     (repo: Repository) => {
-      return repo.pushedAt.startsWith(month);
+      return (repo.defaultBranchRef?.target?.history?.totalCount ?? 0) > 0;
     },
   );
 

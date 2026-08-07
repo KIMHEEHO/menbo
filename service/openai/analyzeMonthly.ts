@@ -9,6 +9,5 @@ export async function analyzeMonthly(
   repo: Repository[],
 ): Promise<AnalysisResult> {
   const prompt = buildMonthlyPrompt(summary, repo);
-  const result = await askAI(prompt);
-  return JSON.parse(result) as AnalysisResult;
+  return await askAI(prompt);
 }

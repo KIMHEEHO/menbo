@@ -5,7 +5,7 @@ import { AnalysisResult } from "@/types/weeklySummaryVO";
 export async function getGrowthPoint(
   monthlySummary: AnalysisResult,
   weeklySummary: AnalysisResult[],
-) {
+): Promise<AnalysisResult> {
   const prompt = buildGrowthPointPrompt(monthlySummary, weeklySummary);
 
   return await askAI(prompt);

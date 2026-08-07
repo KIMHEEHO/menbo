@@ -11,6 +11,10 @@ export type MonthlySummaryVO = {
     growth_points: string;
     next_recommendation: string;
   };
-  growthPoint: string;
+  growthPoint?: {
+    positive_feedback: string;
+    growth_points: string;
+    next_recommendation: string;
+  };
   createdAt: Date;
 };

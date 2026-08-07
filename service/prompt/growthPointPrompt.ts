@@ -35,9 +35,9 @@ ${monthlySummary ? JSON.stringify(monthlySummary) : "월간 분석 데이터가 
 반드시 아래 JSON만 반환하세요.
 
 {
-  "positive": "",
-  "growthPoint": "",
-  "recommendation": ""
+  "positive_feedback": "",
+  "growth_points": "",
+  "next_recommendation": ""
 }
 `;
 }

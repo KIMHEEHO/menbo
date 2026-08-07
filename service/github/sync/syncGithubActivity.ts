@@ -57,8 +57,6 @@ export async function syncGithubActivity(
       weeklyData.commits,
     );
 
-    console.log("주간 분석 결과:", analysisData);
-
     const weeklySummary: WeeklySummaryVO = {
       userLogin: user.login,
       weekStart: startIso,
@@ -85,7 +83,7 @@ export async function syncGithubActivity(
 
   // 저장된 데이터가 없으면 월간 AI, 성장포인트 분석 후 저장
   if (!existingMonthly) {
-    const analysisData = await analyzeMonthly(
+    const analysisMonthlyData = await analyzeMonthly(
       monthlyData.summary,
       monthlyData.repo,
     );
@@ -96,11 +94,10 @@ export async function syncGithubActivity(
       summary: monthlyData.summary,
       repo: monthlyData.repo,
       analysis: {
-        positive_feedback: analysisData.positive_feedback,
-        growth_points: analysisData.growth_points,
-        next_recommendation: analysisData.next_recommendation,
+        positive_feedback: analysisMonthlyData.positive_feedback,
+        growth_points: analysisMonthlyData.growth_points,
+        next_recommendation: analysisMonthlyData.next_recommendation,
       },
-      growthPoint: "",
       createdAt: new Date(),
     };
 

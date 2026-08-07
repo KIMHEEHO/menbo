@@ -59,7 +59,7 @@ model MonthlySummary {
   repo          Json
 
   analysis      Json?
-  growthPoint   String?
+  growthPoint   Json?
 
   createdAt     DateTime @default(now())
 
