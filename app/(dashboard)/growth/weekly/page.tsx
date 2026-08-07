@@ -5,8 +5,7 @@ import { getWeeklyData } from "@/service/github/fetch/weekly";
 import { getIsoDate, getWeekRange } from "@/utils/getWeekRange";
 import WeeklyActivityChart from "@/components/report/weekly/WeeklyChart";
 import { WeeklyTimeline } from "@/components/report/weekly/WeeklyTimeline";
-import { AnalysisAlert } from "@/components/report/AnalysisAlert";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { AiInsight } from "@/components/report/AiInsight";
 
 export default async function weeklyReport() {
   const { start, end } = getWeekRange(-1);
@@ -38,10 +37,8 @@ export default async function weeklyReport() {
   ];
 
   return (
-    // <div className="w-full px-8 py-8">
-    <div className="mx-auto w-full max-w-[1600px] px-6 py-8">
-      {/* 상단 날짜 타이틀 영역 */}
-      <div className="mb-6">
+    <div className="mx-auto w-full max-w-[1600px] ">
+      <div className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight">
           📊 나의 주간 활동 분석
         </h1>
@@ -51,8 +48,10 @@ export default async function weeklyReport() {
       </div>
 
       <div className="grid grid-cols-10 gap-6">
-        {/* <div className="col-span-4 rounded-xl border bg-card text-card-foreground p-6 shadow-sm grid grid-cols-2 gap-4"> */}
-        <div className="col-span-4 grid grid-cols-2 gap-4 bg-white rounded-xl border p-6 shadow-sm">
+        <div className="col-span-3 grid grid-cols-2 gap-4 bg-white rounded-xl border p-4 shadow-sm h-55">
+          <h1 className="text-xl font-semibold col-span-2 text-black">
+            주간 GitHub 활동 요약
+          </h1>
           {cards.map((card) => (
             <GitHubActivityCard
               key={card.title}
@@ -62,24 +61,33 @@ export default async function weeklyReport() {
           ))}
         </div>
 
-        {/* <div className="col-span-6 rounded-xl border text-card-foreground p-6 shadow-sm bg-white"> */}
-        <div className="col-span-6 grid grid-cols-1 gap-6 bg-white rounded-xl border p-6 shadow-sm">
-          <h3 className="font-semibold mb-4">주간 기여도 그래프</h3>
-          <WeeklyActivityChart chart={weeklyData.chart} />
+        <div className="col-span-7 bg-white rounded-xl border p-4 shadow-sm h-55">
+          <h1 className="text-xl font-semibold mb-4 text-black">
+            주간 GitHub 활동 그래프
+          </h1>
+          <div className="flex gap-3 text-xs">
+            <span className="text-orange-500">● 커밋 수</span>
+            <span className="text-green-500">● 변경 파일 수</span>
+          </div>
+          <div className="h-37.5">
+            <WeeklyActivityChart chart={weeklyData.chart} />
+          </div>
         </div>
 
-        <div className="col-span-10 rounded-xl border bg-card text-card-foreground p-6 shadow-sm">
-          <h3 className="font-semibold mb-4">최근 커밋 타임라인</h3>
+        <div className="col-span-5 rounded-xl border bg-card text-card-foreground p-4 shadow-sm min-h-85">
+          <h1 className="text-xl font-semibold mb-4 text-black">
+            주간 GitHub 커밋 타임라인
+          </h1>
           <div className="space-y-3">
             <WeeklyTimeline commits={weeklyData.commits} />
           </div>
         </div>
 
-        <div className="col-span-10 rounded-xl border bg-muted/50 p-6 shadow-sm">
-          <h4>💡 AI 주간 인사이트</h4>
-          <AnalysisAlert
-            analysis={weeklyAnalysis?.analysis as AnalysisResult | undefined}
-          />
+        <div className="col-span-5 rounded-xl border bg-white p-4 shadow-sm min-h-85">
+          <h1 className="text-xl font-semibold mb-4 text-black">
+            멘보의 한마디
+          </h1>
+          <AiInsight analysis={weeklyAnalysis?.analysis} />
         </div>
       </div>
     </div>
