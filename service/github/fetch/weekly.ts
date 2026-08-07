@@ -77,9 +77,26 @@ export async function getWeeklyData(
         new Date(a.committedDate).getTime(),
     );
 
+  const changedFilesByDate = weeklyCommits.reduce(
+    (acc: Record<string, number>, commit: CommitNode) => {
+      const date = commit.committedDate.slice(0, 10);
+
+      acc[date] = (acc[date] ?? 0) + (commit.changedFilesIfAvailable ?? 0);
+
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  const chartData = weeklyCalendar.map((day: ContributionDay) => ({
+    date: day.date,
+    contributionCount: day.contributionCount,
+    changedFiles: changedFilesByDate[day.date] ?? 0,
+  }));
+
   return {
     summary: weeklySummary,
-    calendar: weeklyCalendar,
+    chart: chartData,
     commits: weeklyCommits,
   };
 }

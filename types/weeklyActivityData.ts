@@ -33,6 +33,7 @@ export type RepositoryCommit = {
 export type ContributionDay = {
   date: string;
   contributionCount: number;
+  changedFiles: number;
 };
 
 export type ContributionWeek = {
