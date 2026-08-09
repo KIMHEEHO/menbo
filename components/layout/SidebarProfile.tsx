@@ -30,7 +30,7 @@ export default function SidebarProfile({
             collapsed ? "w-20 justify-center" : "gap-3 px-2"
           }`}
         >
-          <GitHubAvatar avatarUrl={url} name={name} />
+          <GitHubAvatar avatarUrl={url ?? ""} name={name} />
           {!collapsed && (
             <span className="text-sm font-medium text-gray-700">{name}</span>
           )}
