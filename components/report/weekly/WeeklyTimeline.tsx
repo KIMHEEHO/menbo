@@ -16,7 +16,7 @@ type WeeklyTimelineProps = {
 
 export function WeeklyTimeline(props: WeeklyTimelineProps) {
   return (
-    <ScrollArea className="h-full w-full rounded-md border">
+    <ScrollArea className="h-72 w-full rounded-md border">
       <div className="relative p-4">
         {/* 세로선 */}
         <div className="absolute left-8 top-4 bottom-4 w-px bg-gray-300" />
@@ -29,6 +29,7 @@ export function WeeklyTimeline(props: WeeklyTimelineProps) {
             </div>
 
             {/* 내용 */}
+
             <div className="flex-1">
               <p className="text-xs text-muted-foreground">
                 {new Date(commit.committedDate).toLocaleString()}
