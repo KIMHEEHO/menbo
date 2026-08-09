@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface GitHubAvatarProps {
-  avatarUrl?: string | null;
+  avatarUrl?: string;
   name: string;
 }
 export function GitHubAvatar({ avatarUrl, name }: GitHubAvatarProps) {
