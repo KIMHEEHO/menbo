@@ -20,7 +20,7 @@ export default async function Header() {
             개발자의 성장을 기록하다
           </p>
         </div>
-        {session.isLoggedIn && <HeaderButton avatarUrl={userInfo.avatarUrl} />}
+        {session.isLoggedIn && <HeaderButton />}
       </header>
     </>
   );
