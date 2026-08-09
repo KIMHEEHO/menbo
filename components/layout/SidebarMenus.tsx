@@ -46,7 +46,7 @@ export default function SidebarMenus({ collapsed }: { collapsed: boolean }) {
               collapsed ? "justify-center px-0" : "gap-3 px-4"
             } ${
               active
-                ? "bg-indigo-50 font-medium text-indigo-600"
+                ? "bg-green-50 font-medium text-green-600"
                 : "text-gray-600 hover:bg-gray-100"
             }`}
           >

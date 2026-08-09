@@ -41,7 +41,7 @@ export default function RepositoryCard(props: RepositoryCardProps) {
           <div className="flex items-center justify-between">
             <span className="text-gray-500">Language</span>
 
-            <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-600">
+            <span className="rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600">
               {props.primaryLanguage?.name ?? "N/A"}
             </span>
           </div>

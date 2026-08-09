@@ -24,7 +24,7 @@ export function WeeklyTimeline(props: WeeklyTimelineProps) {
         {props.commits.map((commit) => (
           <div key={commit.url} className="relative flex gap-2 pb-4">
             {/* 아이콘 */}
-            <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 text-white">
+            <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-white">
               <GitCommitHorizontal className="h-4 w-4" />
             </div>
 
@@ -38,7 +38,7 @@ export function WeeklyTimeline(props: WeeklyTimelineProps) {
                 href={commit.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block font-semibold text-black hover:text-blue-600 hover:underline"
+                className="block font-semibold text-black hover:text-green-600 hover:underline"
               >
                 {commit.messageHeadline}
               </a>
