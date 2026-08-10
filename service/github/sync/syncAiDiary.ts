@@ -1,3 +1,4 @@
+"use server";
 import { getDiaryByDate } from "@/actions/getDiaryByDate";
 import { getCommits } from "../fetch/commits";
 import { getIsoDate } from "@/utils/getWeekRange";
