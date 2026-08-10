@@ -1,9 +1,10 @@
 import { DiaryClient } from "@/components/diary/DiaryClient";
-
-export default function aiDiary() {
+import { getSession } from "@/lib/session";
+export default async function aiDiary() {
+  const session = await getSession();
   return (
     <>
-      <DiaryClient />
+      <DiaryClient accessToken={session.accessToken} />
     </>
   );
 }

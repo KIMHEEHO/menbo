@@ -3,15 +3,18 @@
 import { DiaryCalendar } from "./DiaryCalendar";
 import { DiaryCard } from "./DiaryCard";
 import { useState } from "react";
-import { getDiaryByDate } from "@/actions/getDiaryByDate";
+import syncAiDiary from "@/service/github/sync/syncAiDiary";
 
 type Diary = {
   title: string;
   content: string;
-  diaryDate: Date;
 };
 
-export function DiaryClient() {
+interface DiaryClientProps {
+  accessToken: string;
+}
+
+export function DiaryClient({ accessToken }: DiaryClientProps) {
   const [date, setDate] = useState<Date>();
   const [diary, setDiary] = useState<Diary | null>(null);
 
@@ -23,8 +26,7 @@ export function DiaryClient() {
       return;
     }
 
-    const result = await getDiaryByDate(newDate);
-    setDiary(result);
+    setDiary(await syncAiDiary(accessToken, newDate.toISOString()));
   };
 
   return (
@@ -38,7 +40,7 @@ export function DiaryClient() {
             <DiaryCard
               title={diary.title}
               content={diary.content}
-              date={diary.diaryDate}
+              date={date as Date}
             />
           )}
         </section>
