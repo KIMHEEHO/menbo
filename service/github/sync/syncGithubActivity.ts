@@ -50,7 +50,7 @@ export async function syncGithubActivity(
   const existingWeekly = await getWeeklySummary(user.login, startIso);
 
   // 저장된 데이터가 없으면 주간 AI 분석 후 저장
-  if (!existingWeekly) {
+  if (!existingWeekly.analysis) {
     const analysisData = await analyzeWeekly(
       weeklyData.summary,
       weeklyData.chart,
