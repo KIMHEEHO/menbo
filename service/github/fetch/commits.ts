@@ -38,7 +38,7 @@ export async function getCommits(
 `;
 
   const response = await requestGithubGraphql(accessToken, query);
-
+  console.log("Commits response:", response);
   return response.data.viewer.repositories.nodes.flatMap(
     (repo: RepositoryCommit) =>
       repo.defaultBranchRef?.target?.history?.nodes ?? [],

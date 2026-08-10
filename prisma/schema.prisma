@@ -21,6 +21,8 @@ model User {
   email      String?
   avatarUrl  String?
   createdAt  DateTime @default(now())
+
+  growthDiaries GrowthDiary[]
 }
 
 model GithubEvent {
@@ -66,3 +68,16 @@ model MonthlySummary {
   @@unique([userLogin, month])
 }
 
+model GrowthDiary {
+  id        String   @id @default(cuid())
+  userId    String
+  diaryDate DateTime @db.Date
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, diaryDate])
+  @@index([userId, diaryDate])
+}
