@@ -4,13 +4,8 @@ import { getSession } from "@/lib/session";
 import { MessageList } from "@/components/chat/MessageList";
 import ChatInput from "@/components/chat/ChatInput";
 import ChatEmpty from "@/components/chat/ChatEmpty";
+import { Message } from "@/types/message";
 
-type Message = {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  createdAt: string;
-};
 const messages: Message[] = [
   {
     id: "1",
