@@ -23,6 +23,7 @@ model User {
   createdAt  DateTime @default(now())
 
   growthDiaries GrowthDiary[]
+  chats         Chat[]
 }
 
 model GithubEvent {
@@ -82,3 +83,19 @@ model GrowthDiary {
   @@index([userId, diaryDate])
 }
 
+enum ChatRole {
+  USER
+  ASSISTANT
+}
+
+model Chat {
+  id          String    @id @default(cuid())
+  userId      String
+  role        ChatRole
+  content     String
+  createdAt   DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [githubId], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
