@@ -1,8 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
 
 export async function getWeeklySummary(userLogin: string, startDate: string) {
-  const data = await prisma.weeklySummary.findUnique({
+  return await prisma.weeklySummary.findUnique({
     where: {
       userLogin_weekStart: {
         userLogin,
@@ -10,8 +9,4 @@ export async function getWeeklySummary(userLogin: string, startDate: string) {
       },
     },
   });
-
-  return {
-    analysis: data?.analysis as AnalysisResult | undefined,
-  };
 }

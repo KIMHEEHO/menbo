@@ -6,7 +6,6 @@ import { saveGithubEvents } from "@/data-access/saveGithubEvents";
 import { saveMonthlySummary } from "@/data-access/saveMonthlySummary";
 import { analyzeWeekly } from "@/service/openai/analyzeWeekly";
 import { analyzeMonthly } from "@/service/openai/analyzeMonthly";
-import { getWeeklySummary } from "@/data-access/getWeeklySummary";
 import { getMonthlySummary } from "@/data-access/getMonthlySummary";
 import { getWeekRange, getIsoDate } from "@/utils/getWeekRange";
 import { getWeeklyData } from "../fetch/weekly";
@@ -16,6 +15,7 @@ import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
 import { getWeeklyAnalysisAction } from "@/actions/getWeeklyAnalysis";
 import { getGrowthPoint } from "../../openai/growthPoint";
 import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { getWeeklySummary } from "@/data-access/getWeeklySummary";
 
 export async function syncGithubActivity(
   accessToken: string,
@@ -50,7 +50,7 @@ export async function syncGithubActivity(
   const existingWeekly = await getWeeklySummary(user.login, startIso);
 
   // 저장된 데이터가 없으면 주간 AI 분석 후 저장
-  if (!existingWeekly.analysis) {
+  if (!existingWeekly) {
     const analysisData = await analyzeWeekly(
       weeklyData.summary,
       weeklyData.chart,
