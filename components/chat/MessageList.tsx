@@ -6,21 +6,14 @@ import {
   MessageHeader,
 } from "@/components/ui/message";
 import { GitHubAvatar } from "../common/GitHubAvatar";
-
-type Message = {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  createdAt: string;
-};
-
+import { Message as MessageType } from "@/types/message";
 type UserInfo = {
   userName: string;
   avatarUrl: string;
 };
 
 export function MessageList(props: {
-  messages: Message[];
+  messages: MessageType[];
   userInfo: UserInfo;
 }) {
   const { messages, userInfo } = props;
@@ -29,19 +22,19 @@ export function MessageList(props: {
       {messages.map((message) => (
         <Message
           key={message.id}
-          align={message.role === "user" ? "end" : "start"}
+          align={message.role === "USER" ? "end" : "start"}
         >
           <MessageAvatar>
             <GitHubAvatar
-              avatarUrl={message.role === "user" ? userInfo.avatarUrl : ""}
-              name={message.role === "user" ? userInfo.userName : "멘보"}
+              avatarUrl={message.role === "USER" ? userInfo.avatarUrl : ""}
+              name={message.role === "USER" ? userInfo.userName : "멘보"}
             />
           </MessageAvatar>
           <MessageContent>
             <MessageHeader>
-              {message.role === "user" ? userInfo.userName : "멘보"}
+              {message.role === "USER" ? userInfo.userName : "멘보"}
             </MessageHeader>
-            <Bubble variant={message.role !== "user" ? "muted" : undefined}>
+            <Bubble variant={message.role !== "USER" ? "muted" : undefined}>
               <BubbleContent>{message.content}</BubbleContent>
             </Bubble>
           </MessageContent>
