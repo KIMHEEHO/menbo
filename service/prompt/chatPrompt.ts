@@ -1,24 +1,32 @@
 import { CommitNode } from "@/types/commit";
 import { Message } from "@/types/message";
-import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
-import { WeeklySummaryVO } from "@/types/weeklySummaryVO";
+import { AnalysisResult, MonthlyReviewResult } from "@/types/monthlySummaryVO";
+import { WeeklyMonthlySummary } from "@/types/weeklyActivityData";
 
 export function buildChatPrompt(
-  weeklySummary: WeeklySummaryVO | null,
-  monthlySummary: MonthlySummaryVO | null,
+  weeklyCommits: CommitNode[],
+  weeklyAnalysis: AnalysisResult,
+  monthlySummary: WeeklyMonthlySummary,
+  monthlyAnalysis: AnalysisResult,
+  growthPoint: MonthlyReviewResult,
   message: Message[],
 ): string {
   const chatHistory = message
-    .map((msg) => `[${msg.role}] ${msg.content}`)
+    .map((msg) => `${msg.id}.[${msg.role}] ${msg.content}`)
     .join("\n");
+
+  const commits = weeklyCommits
+    .map((commit) => `- ${commit.messageHeadline}`)
+    .join(",\n");
   return `
     당신은 '멘보(MENBO)'의 시니어 개발 멘토이자 친근한 AI 동료입니다.
 사용자(개발자)의 GitHub 커밋 내역과 주간 활동 분석 결과를 바탕으로, 사용자가 자신의 개발 과정과 성장을 객관적으로 바라볼 수 있도록 현실적이고 도움이 되는 조언을 제공합니다.
 [최근 대화 기록] ${chatHistory} 
-[오늘의 커밋 및 활동] ${weeklySummary ? weeklySummary.commits.map((commit: CommitNode) => `\n- ${commit.messageHeadline}`).join("") : ""}
-[주간 활동 분석 리포트] ${weeklySummary ? weeklySummary.analysis : ""}
-[월간 활동 분석 리포트] ${monthlySummary ? monthlySummary.analysis : ""}
-[월간 리뷰] ${monthlySummary ? monthlySummary.growthPoint : ""}
+[주간 커밋] ${commits}
+[주간 활동 분석 리포트] ${weeklyAnalysis}
+[월간 활동] ${monthlySummary}
+[월간 활동 분석 리포트] ${monthlyAnalysis}
+[월간 리뷰] ${growthPoint}
 [행동 지침]
 1. 대화의 근거
 * 답변은 제공된 커밋 내역과 주간 분석 결과를 근거로 작성하세요.
