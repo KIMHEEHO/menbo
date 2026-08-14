@@ -8,15 +8,19 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { sendChatMessage } from "@/actions/sendChatMessage";
 
 export default function ChatInput() {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
-    console.log("전송된 메시지:", inputValue);
+    const message = inputValue;
+
     setInputValue("");
+
+    await sendChatMessage(message);
   };
 
   return (
