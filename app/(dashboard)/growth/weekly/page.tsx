@@ -6,6 +6,7 @@ import { getIsoDate, getWeekRange } from "@/utils/getWeekRange";
 import WeeklyActivityChart from "@/components/report/weekly/WeeklyChart";
 import { WeeklyTimeline } from "@/components/report/weekly/WeeklyTimeline";
 import { AiInsight } from "@/components/report/AiInsight";
+import { AnalysisResult } from "@/types/monthlySummaryVO";
 
 export default async function weeklyReport() {
   const { start, end } = getWeekRange(-1);
@@ -87,7 +88,9 @@ export default async function weeklyReport() {
           <h1 className="text-xl font-semibold mb-4 text-black">
             멘보의 한마디
           </h1>
-          <AiInsight analysis={weeklyAnalysis?.analysis} />
+          <AiInsight
+            analysis={weeklyAnalysis?.analysis as AnalysisResult | undefined}
+          />
         </div>
       </div>
     </div>
