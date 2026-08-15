@@ -19,7 +19,7 @@ export async function syncAiChat(message: string) {
 
   //데이터베이스에 저장
   await saveMessage("USER", message);
-  
+
   // 주간 활동 분석 결과 가져오기
   const weeklySummary = await getWeeklySummary(session.githubLogin, week.start);
   if (!weeklySummary) {
@@ -46,7 +46,5 @@ export async function syncAiChat(message: string) {
   );
 
   // AI 챗 메시지 저장
-  await saveMessage("ASSISTANT", aiMessage.message);
-
-  return aiMessage.message;
+  return await saveMessage("ASSISTANT", aiMessage.message);
 }

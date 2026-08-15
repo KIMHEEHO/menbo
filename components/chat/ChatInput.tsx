@@ -9,8 +9,17 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { sendChatMessage } from "@/actions/sendChatMessage";
+import { Message } from "@/types/message";
 
-export default function ChatInput() {
+type ChatInputProps = {
+  onUserMessage: (content: string) => void;
+  onAiMessage: (message: Message) => void;
+};
+
+export default function ChatInput({
+  onUserMessage,
+  onAiMessage,
+}: ChatInputProps) {
   const [inputValue, setInputValue] = useState("");
 
   const handleSendMessage = async () => {
@@ -20,7 +29,14 @@ export default function ChatInput() {
 
     setInputValue("");
 
-    await sendChatMessage(message);
+    // 사용자 메시지 화면 출력
+    onUserMessage(message);
+
+    // AI 응답 요청
+    const aiMessage = await sendChatMessage(message);
+
+    // AI 응답 화면에 추가
+    onAiMessage(aiMessage);
   };
 
   return (

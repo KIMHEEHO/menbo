@@ -6,6 +6,7 @@ import { MessageList } from "./MessageList";
 import ChatInput from "./ChatInput";
 import ChatEmpty from "./ChatEmpty";
 import { Message } from "@/types/message";
+import { ChatRole } from "@prisma/client";
 
 export interface ChatProps {
   initialMessages: Message[];
@@ -34,7 +35,25 @@ export function ChatClient({ initialMessages, userInfo }: ChatProps) {
               <ChatEmpty userName={userInfo.userName || ""} />
             )
           }
-          input={<ChatInput />}
+          input={
+            <ChatInput
+              onUserMessage={(content) => {
+                setMessages((prev) => [
+                  ...prev,
+                  {
+                    id: crypto.randomUUID(),
+                    userId: "",
+                    role: ChatRole.USER,
+                    content,
+                    createdAt: new Date(),
+                  },
+                ]);
+              }}
+              onAiMessage={(message) => {
+                setMessages((prev) => [...prev, message]);
+              }}
+            />
+          }
         />
       </main>
     </>
