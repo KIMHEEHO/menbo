@@ -12,21 +12,38 @@ export function buildChatPrompt(
   message: Message[],
 ): string {
   const chatHistory = message
-    .map((msg) => `${msg.id}.[${msg.role}] ${msg.content}`)
+    .map((msg) => `[${msg.role}] ${msg.content}`)
     .join("\n");
 
   const commits = weeklyCommits
     .map((commit) => `- ${commit.messageHeadline}`)
     .join(",\n");
+
+  const weeklyAnalysisString = `- 긍정적인 피드백: ${weeklyAnalysis.positive_feedback}\n- 성장 포인트: ${weeklyAnalysis.growth_points}\n- 다음 추천 사항: ${weeklyAnalysis.next_recommendation}`;
+  const monthlySummaryString = `- 총 커밋 수: ${monthlySummary.totalCommitContributions}\n- 총 PR 수: ${monthlySummary.totalPullRequestContributions}\n- 총 이슈 수: ${monthlySummary.totalIssueContributions}\n- 총 레포지토리 수: ${monthlySummary.totalRepositoryContributions}`;
+  const monthlyAnalysisString = `- 긍정적인 피드백: ${monthlyAnalysis.positive_feedback}\n- 성장 포인트: ${monthlyAnalysis.growth_points}\n- 다음 추천 사항: ${monthlyAnalysis.next_recommendation}`;
+  const growthPointString = [
+    `[이번 달 요약]\n${growthPoint.summary}`,
+    `\n[주요 성과]\n` +
+      growthPoint.achievement
+        .map((item) => `- ${item.title}: ${item.description}`)
+        .join("\n"),
+    `\n[성장 필요 영역]\n` +
+      growthPoint.growthAreas
+        .map((item) => `- ${item.title}: ${item.description}`)
+        .join("\n"),
+    `\n[다음 추천 사항]\n` +
+      growthPoint.nextSteps.map((step) => `- ${step}`).join("\n"),
+  ].join("\n");
   return `
     당신은 '멘보(MENBO)'의 시니어 개발 멘토이자 친근한 AI 동료입니다.
 사용자(개발자)의 GitHub 커밋 내역과 주간 활동 분석 결과를 바탕으로, 사용자가 자신의 개발 과정과 성장을 객관적으로 바라볼 수 있도록 현실적이고 도움이 되는 조언을 제공합니다.
 [최근 대화 기록] ${chatHistory} 
 [주간 커밋] ${commits}
-[주간 활동 분석 리포트] ${weeklyAnalysis}
-[월간 활동] ${monthlySummary}
-[월간 활동 분석 리포트] ${monthlyAnalysis}
-[월간 리뷰] ${growthPoint}
+[주간 활동 분석 리포트] ${weeklyAnalysisString}
+[월간 활동] ${monthlySummaryString}
+[월간 활동 분석 리포트] ${monthlyAnalysisString}
+[월간 리뷰] ${growthPointString}
 [행동 지침]
 1. 대화의 근거
 * 답변은 제공된 커밋 내역과 주간 분석 결과를 근거로 작성하세요.
@@ -52,5 +69,10 @@ export function buildChatPrompt(
 * 사용자가 개발 과정에서 느끼는 고민이나 불안을 함께 정리해주세요.
 * 필요한 경우 지금 당장 할 수 있는 작고 구체적인 다음 행동을 제안해주세요.
 * 멘보가 사용자를 대신해 판단하기보다는, 사용자가 스스로 자신의 성장을 발견할 수 있도록 대화를 이끌어주세요.
+* [출력 형식 (필수)]
+* 답변은 반드시 아래의 JSON 구조로만 출력하세요. 마크다운 백틱이나 다른 텍스트를 포함하지 말고 순수 JSON 문자열만 반환하세요.
+{
+  "message": "사용자에게 전달할 답변 텍스트 (친근한 멘토 말투)"
+}
 `;
 }
