@@ -1,9 +1,9 @@
 import { CirclePlus, MessageCircleHeart, Sprout } from "lucide-react";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { Analysis } from "@/types/analysis";
 type AiInsightProps = {
-  analysis?: AnalysisResult;
+  analysis?: Analysis;
 };
 
 export function AiInsight({ analysis }: AiInsightProps) {

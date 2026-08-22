@@ -1,8 +1,8 @@
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { Analysis } from "@/types/analysis";
 
 export function buildGrowthPointPrompt(
-  monthlySummary: AnalysisResult,
-  w: AnalysisResult[],
+  monthlySummary: Analysis,
+  w: Analysis[],
 ): string {
   return `
 당신은 '멘보(MENBO)'의 AI 멘탈 코치입니다.

@@ -14,7 +14,7 @@ import { getMonthlyData } from "../fetch/monthly";
 import { MonthlySummaryVO } from "@/types/monthlySummaryVO";
 import { getWeeklyAnalysisAction } from "@/actions/getWeeklyAnalysis";
 import { getGrowthPoint } from "../../openai/growthPoint";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { Analysis } from "@/types/analysis";
 import { getWeeklySummary } from "@/data-access/getWeeklySummary";
 
 export async function syncGithubActivity(
@@ -117,7 +117,7 @@ export async function syncGithubActivity(
       );
 
       if (weekly?.analysis) {
-        weeklyAnalysis.push(weekly.analysis as AnalysisResult);
+        weeklyAnalysis.push(weekly.analysis as Analysis);
       }
     }
 

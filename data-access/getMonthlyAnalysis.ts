@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { Analysis } from "@/types/analysis";
 import { MonthlyReviewResult } from "@/types/monthlySummaryVO";
 
 export async function getMonthlyAnalysis(userLogin: string, month: string) {
@@ -19,7 +19,7 @@ export async function getMonthlyAnalysis(userLogin: string, month: string) {
   if (!result) return null;
 
   return {
-    analysis: result.analysis as AnalysisResult,
+    analysis: result.analysis as Analysis,
     growthPoint: result.growthPoint as MonthlyReviewResult | null,
   };
 }
