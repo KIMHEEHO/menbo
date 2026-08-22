@@ -33,7 +33,7 @@ export default async function weeklyReport() {
     },
     {
       title: "Repository",
-      count: weeklyData.summary.totalRepositoryContributions,
+      count: weeklyData.repo.length,
     },
   ];
 

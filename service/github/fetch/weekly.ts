@@ -4,6 +4,7 @@ import {
   ContributionWeek,
   ContributionDay,
 } from "@/types/contributionCalendar";
+import { Repository } from "@/types/monthlyActivityData";
 
 export async function getWeeklyData(
   accessToken: string,
@@ -23,6 +24,7 @@ export async function getWeeklyData(
                                     since: "${start}"
                                     until: "${end}"
                                     ) {
+                                    totalCount
                                     nodes {
                                         messageHeadline
                                         committedDate
@@ -66,6 +68,12 @@ export async function getWeeklyData(
     .flatMap((week: ContributionWeek) => week.contributionDays)
     .filter((day: ContributionDay) => day.date >= start && day.date <= end);
 
+  const projects = response.data.viewer.repositories.nodes.filter(
+    (repo: Repository) => {
+      return (repo.defaultBranchRef?.target?.history?.totalCount ?? 0) > 0;
+    },
+  );
+
   const weeklyCommits = response.data.viewer.repositories.nodes
     .flatMap(
       (repo: RepositoryCommit) =>
@@ -96,6 +104,7 @@ export async function getWeeklyData(
 
   return {
     summary: weeklySummary,
+    repo: projects,
     chart: chartData,
     commits: weeklyCommits,
   };
