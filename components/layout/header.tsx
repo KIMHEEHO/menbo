@@ -13,12 +13,9 @@ export default async function Header() {
     <>
       <header className="h-16 flex items-center justify-between px-6 bg-white border-b">
         <div className="flex-center text-center text-4xl font-black tracking-[0.08em] text-black ">
-          <h1 className="text-2xl font-black tracking-[0.08em] text-black">
+          <h1 className="text-4xl font-black tracking-[0.08em] text-black">
             MENBO
           </h1>
-          <p className="text-sm text-muted-foreground ">
-            개발자의 성장을 기록하다
-          </p>
         </div>
         {session.isLoggedIn && <HeaderButton />}
       </header>
