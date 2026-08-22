@@ -6,6 +6,7 @@ import { Repository } from "@/types/monthlyActivityData";
 import { AiInsight } from "@/components/report/AiInsight";
 import RepositoryCard from "@/components/report/monthly/RepositoryCard";
 import GrowthPointSection from "@/components/report/monthly/GrowthPointSection";
+import Calendar from "@/components/report/Calendar";
 export default async function growthReport() {
   const date = new Date();
   date.setMonth(date.getMonth() - 1);
@@ -44,9 +45,10 @@ export default async function growthReport() {
         <h1 className="text-2xl font-bold tracking-tight">
           📊 나의 월간 활동 분석
         </h1>
-        <p className="text-muted-foreground text-sm">
+        {/* <p className="text-muted-foreground text-sm">
           날짜 컴포넌트 들어갈 자리
-        </p>
+        </p> */}
+        <Calendar />
       </div>
 
       <div className="grid grid-cols-10 gap-6">

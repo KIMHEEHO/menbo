@@ -7,6 +7,7 @@ import WeeklyActivityChart from "@/components/report/weekly/WeeklyChart";
 import { WeeklyTimeline } from "@/components/report/weekly/WeeklyTimeline";
 import { AiInsight } from "@/components/report/AiInsight";
 import { AnalysisResult } from "@/types/monthlySummaryVO";
+import Calendar from "@/components/report/Calendar";
 
 export default async function weeklyReport() {
   const { start, end } = getWeekRange(-1);
@@ -43,9 +44,10 @@ export default async function weeklyReport() {
         <h1 className="text-2xl font-bold tracking-tight">
           📊 나의 주간 활동 분석
         </h1>
-        <p className="text-muted-foreground text-sm">
+        {/* <p className="text-muted-foreground text-sm">
           날짜 컴포넌트 들어갈 자리
-        </p>
+        </p> */}
+        <Calendar />
       </div>
 
       <div className="grid grid-cols-10 gap-6">
