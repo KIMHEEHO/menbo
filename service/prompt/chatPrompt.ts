@@ -1,13 +1,14 @@
+import { Analysis } from "@/types/analysis";
 import { CommitNode } from "@/types/commit";
 import { Message } from "@/types/message";
-import { AnalysisResult, MonthlyReviewResult } from "@/types/monthlySummaryVO";
+import { MonthlyReviewResult } from "@/types/monthlySummaryVO";
 import { WeeklyMonthlySummary } from "@/types/weeklyActivityData";
 
 export function buildChatPrompt(
   weeklyCommits: CommitNode[],
-  weeklyAnalysis: AnalysisResult,
+  weeklyAnalysis: Analysis,
   monthlySummary: WeeklyMonthlySummary,
-  monthlyAnalysis: AnalysisResult,
+  monthlyAnalysis: Analysis,
   growthPoint: MonthlyReviewResult,
   message: Message[],
 ): string {

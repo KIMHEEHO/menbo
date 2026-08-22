@@ -1,3 +1,4 @@
+import { Analysis } from "./analysis";
 import { Repository } from "./monthlyActivityData";
 import { WeeklyMonthlySummary } from "./weeklyActivityData";
 
@@ -6,15 +7,11 @@ export type MonthlySummaryVO = {
   month: string;
   summary: WeeklyMonthlySummary;
   repo: Repository[];
-  analysis: AnalysisResult;
+  analysis: Analysis;
   growthPoint: MonthlyReviewResult | null;
   createdAt: Date;
 };
-export type AnalysisResult = {
-  positive_feedback: string;
-  growth_points: string;
-  next_recommendation: string;
-};
+
 export type MonthlyReviewResult = {
   summary: string;
 

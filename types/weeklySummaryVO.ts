@@ -3,6 +3,7 @@ import {
   ContributionDay,
   CommitNode,
 } from "@/types/weeklyActivityData";
+import { Analysis } from "@/types/analysis";
 
 export type WeeklySummaryVO = {
   userLogin?: string;
@@ -10,12 +11,6 @@ export type WeeklySummaryVO = {
   summary: WeeklyMonthlySummary;
   calendar: ContributionDay[];
   commits: CommitNode[];
-  analysis: AnalysisResult;
+  analysis: Analysis;
   createdAt: Date;
-};
-
-export type AnalysisResult = {
-  positive_feedback: string;
-  growth_points: string;
-  next_recommendation: string;
 };

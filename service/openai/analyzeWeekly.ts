@@ -5,13 +5,13 @@ import {
   CommitNode,
   ContributionDay,
 } from "@/types/weeklyActivityData";
-import { AnalysisResult } from "@/types/weeklySummaryVO";
+import { Analysis } from "@/types/analysis";
 
 export async function analyzeWeekly(
   summary: WeeklyMonthlySummary,
   calendar: ContributionDay[],
   commits: CommitNode[],
-): Promise<AnalysisResult> {
+): Promise<Analysis> {
   const prompt = buildWeeklyPrompt(summary, calendar, commits);
   return await askAI(prompt);
 }
