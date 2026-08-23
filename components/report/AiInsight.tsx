@@ -3,7 +3,7 @@ import { CirclePlus, MessageCircleHeart, Sprout } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Analysis } from "@/types/analysis";
 type AiInsightProps = {
-  analysis?: Analysis;
+  analysis: Analysis;
 };
 
 export function AiInsight({ analysis }: AiInsightProps) {
@@ -16,7 +16,7 @@ export function AiInsight({ analysis }: AiInsightProps) {
               <MessageCircleHeart className="text-pink-500" />
               이번주 칭찬
             </h3>
-            <p>{analysis?.positive_feedback ?? "이번주 칭찬이 없습니다."}</p>
+            <p>{analysis.positive_feedback}</p>
           </div>
         </AlertDescription>
       </Alert>
@@ -27,7 +27,7 @@ export function AiInsight({ analysis }: AiInsightProps) {
               <Sprout className="text-green-500" />
               성장 포인트
             </h3>
-            <p>{analysis?.growth_points ?? "성장 포인트가 없습니다."}</p>
+            <p>{analysis.growth_points}</p>
           </div>
         </AlertDescription>
       </Alert>
@@ -38,7 +38,7 @@ export function AiInsight({ analysis }: AiInsightProps) {
               <CirclePlus className="text-blue-500" />
               다음주 추천 사항
             </h3>
-            <p>{analysis?.next_recommendation ?? "추천 사항이 없습니다."}</p>
+            <p>{analysis.next_recommendation}</p>
           </div>
         </AlertDescription>
       </Alert>
