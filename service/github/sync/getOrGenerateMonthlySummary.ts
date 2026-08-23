@@ -1,3 +1,4 @@
+"use server";
 import { getMonthlyData } from "../fetch/monthly";
 import { getMonthlySummary } from "@/data-access/getMonthlySummary";
 import { analyzeMonthly } from "@/service/openai/analyzeMonthly";
@@ -19,10 +20,10 @@ export async function getOrGenerateMonthlySummary(
     return existingMonthly;
   }
 
-  // 2. 없을 때만 깃헙 데이터 긁어오기
+  // 2. 저장된 월간 데이터가 없으면 깃헙 API 호출해서 월간 데이터 가져오기
   const monthlyData = await getMonthlyData(accessToken, month);
 
-  // 3. 월간 AI 분석 및 성장 포인트 분석 병행
+  // 3. 월간 AI 분석 및 성장 포인트 분석
   const analysisMonthlyData = await analyzeMonthly(
     monthlyData.summary,
     monthlyData.repo,

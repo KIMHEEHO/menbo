@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExternalLink, Star, Clock } from "lucide-react";
+import { format } from "date-fns";
 type RepositoryCardProps = {
   name: string;
   description: string | null;
@@ -64,7 +65,7 @@ export default function RepositoryCard(props: RepositoryCardProps) {
 
             <div className="flex items-center gap-1 text-gray-600">
               <Clock size={14} />
-              {new Date(props.pushedAt).toLocaleDateString()}
+              {format(new Date(props.pushedAt), "yyyy. MM. dd.")}
             </div>
           </div>
         </div>
