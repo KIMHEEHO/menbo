@@ -48,7 +48,9 @@ const getPeriod = (
 
 export default function PeriodSelector({
   defaultType = "week",
-  defaultDate = new Date(),
+  defaultDate = defaultType === "week"
+    ? subWeeks(new Date(), 1)
+    : subMonths(new Date(), 1),
   onChange,
 }: PeriodSelectorProps) {
   const [type, setType] = useState<PeriodType>(defaultType);
@@ -76,7 +78,7 @@ export default function PeriodSelector({
     };
   }, []);
 
-  // 💡 핵심: '다음 기간'으로 갈 수 있는지 여부를 체크하는 함수
+  // '다음 기간'으로 갈 수 있는지 여부를 체크하는 함수
   const checkIfNextIsDisabled = (targetDate: Date) => {
     const today = new Date();
     const nextPeriodStart =
@@ -89,7 +91,7 @@ export default function PeriodSelector({
         ? startOfWeek(today, { weekStartsOn: 1 })
         : startOfMonth(today);
 
-    // 다음 기간의 시작일이 오늘이 속한 주/달의 시작일과 같거나 이후라면 이동 불가!
+    // 다음 기간의 시작일이 오늘이 속한 주/달의 시작일과 같거나 이후라면 다음 버튼을 비활성화
     return (
       isAfter(nextPeriodStart, currentPeriodStart) ||
       isEqual(nextPeriodStart, currentPeriodStart)
