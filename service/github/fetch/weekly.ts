@@ -8,8 +8,8 @@ import { Repository } from "@/types/monthlyActivityData";
 
 export async function getWeeklyData(
   accessToken: string,
-  start: string,
-  end: string,
+  start: Date,
+  end: Date,
 ) {
   const query = `
     query {
@@ -21,8 +21,8 @@ export async function getWeeklyData(
                             ... on Commit {
                                 history(
                                     first: 20
-                                    since: "${start}"
-                                    until: "${end}"
+                                    since: "${start.toISOString()}"
+                                    until: "${end.toISOString()}"
                                     ) {
                                     totalCount
                                     nodes {
@@ -40,8 +40,8 @@ export async function getWeeklyData(
                 }
             }
             contributionsCollection(
-                from: "${start}"
-                to: "${end}"
+                from: "${start.toISOString()}"
+                to: "${end.toISOString()}"
             ) {
                 totalCommitContributions
                 totalIssueContributions
@@ -63,10 +63,14 @@ export async function getWeeklyData(
   const response = await requestGithubGraphql(accessToken, query);
 
   const weeklySummary = response.data.viewer.contributionsCollection;
+  weeklySummary.totalRepositoryContributions =
+    response.data.viewer.repositories.nodes.filter((repo: Repository) => {
+      return (repo.defaultBranchRef?.target?.history?.totalCount ?? 0) > 0;
+    }).length;
 
-  const weeklyCalendar = weeklySummary.contributionCalendar.weeks
-    .flatMap((week: ContributionWeek) => week.contributionDays)
-    .filter((day: ContributionDay) => day.date >= start && day.date <= end);
+  const weeklyCalendar = weeklySummary.contributionCalendar.weeks.flatMap(
+    (week: ContributionWeek) => week.contributionDays,
+  );
 
   const projects = response.data.viewer.repositories.nodes.filter(
     (repo: Repository) => {

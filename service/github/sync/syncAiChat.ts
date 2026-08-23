@@ -21,7 +21,10 @@ export async function syncAiChat(message: string) {
   await saveMessage("USER", message);
 
   // 주간 활동 분석 결과 가져오기
-  const weeklySummary = await getWeeklySummary(session.githubLogin, week.start);
+  const weeklySummary = await getWeeklySummary(
+    session.githubLogin,
+    week.startDate,
+  );
   if (!weeklySummary) {
     throw new Error("주간 분석 리포트가 없습니다.");
   }

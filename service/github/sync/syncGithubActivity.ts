@@ -7,7 +7,7 @@ import { saveMonthlySummary } from "@/data-access/saveMonthlySummary";
 import { analyzeWeekly } from "@/service/openai/analyzeWeekly";
 import { analyzeMonthly } from "@/service/openai/analyzeMonthly";
 import { getMonthlySummary } from "@/data-access/getMonthlySummary";
-import { getWeekRange, getIsoDate } from "@/utils/getWeekRange";
+import { getWeekRange } from "@/utils/getWeekRange";
 import { getWeeklyData } from "../fetch/weekly";
 import { WeeklySummaryVO } from "@/types/weeklySummaryVO";
 import { getMonthlyData } from "../fetch/monthly";
@@ -29,12 +29,8 @@ export async function syncGithubActivity(
   await saveGithubEvents(events);
 
   // 주간, 월간 데이터 요청에 필요한 날짜 계산(지난주, 지난달)
-  // start:2026-07-26, end:2026-08-02, startIso:2026-07-26T00:00:00Z, endIso:2026-08-02T23:59:59Z
   // date:2026-07-03T10:31:28.332Z, month:2026-07
-  const { start, end } = getWeekRange(-1);
-
-  const startIso = getIsoDate(start, false);
-  const endIso = getIsoDate(end, true);
+  const { startDate, endDate } = getWeekRange(-1);
 
   const date = new Date();
   date.setMonth(date.getMonth() - 1);
@@ -44,10 +40,10 @@ export async function syncGithubActivity(
   )}`;
 
   // 주간 데이터 요청
-  const weeklyData = await getWeeklyData(accessToken, startIso, endIso);
+  const weeklyData = await getWeeklyData(accessToken, startDate, endDate);
 
   // 저장된 주간 데이터 있는지 확인
-  const existingWeekly = await getWeeklySummary(user.login, startIso);
+  const existingWeekly = await getWeeklySummary(user.login, startDate);
 
   // 저장된 데이터가 없으면 주간 AI 분석 후 저장
   if (!existingWeekly) {
@@ -59,7 +55,7 @@ export async function syncGithubActivity(
 
     const weeklySummary: WeeklySummaryVO = {
       userLogin: user.login,
-      weekStart: startIso,
+      weekStart: startDate,
       summary: weeklyData.summary,
       calendar: weeklyData.chart,
       commits: weeklyData.commits,
@@ -109,12 +105,9 @@ export async function syncGithubActivity(
     }[] = [];
 
     for (let i = -1; i >= -4; i--) {
-      const { start } = getWeekRange(i);
+      const { startDate } = getWeekRange(i);
 
-      const weekly = await getWeeklyAnalysisAction(
-        user.login,
-        getIsoDate(start, false),
-      );
+      const weekly = await getWeeklyAnalysisAction(user.login, startDate);
 
       if (weekly?.analysis) {
         weeklyAnalysis.push(weekly.analysis as Analysis);
