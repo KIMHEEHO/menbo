@@ -1,8 +1,10 @@
-export function getMonthRange(month: string) {
-  const [year, m] = month.split("-").map(Number);
+import { parse, startOfMonth, endOfMonth } from "date-fns";
 
-  const start = new Date(Date.UTC(year, m - 1, 1));
-  const end = new Date(Date.UTC(year, m, 0, 23, 59, 59));
+export function getMonthRange(month: string) {
+  const baseDate = parse(month, "yyyy-MM", new Date());
+
+  const start = startOfMonth(baseDate);
+  const end = endOfMonth(baseDate);
 
   return {
     from: start.toISOString(),
